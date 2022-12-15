@@ -2,8 +2,10 @@ package com.custom_shop.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,17 +52,17 @@ public class Seller {
     @ManyToMany
     Set<PaymentMethod> paymentMethods;
 
-    //@OneToMany(mappedBy = "seller")
-    //@JsonManagedReference
-    //Set<CustomProduct> customProducts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller", fetch = FetchType.LAZY)
+    Set<CustomProduct> customProducts;
 
-    // public Set<CustomProduct> getCustomProducts() {
-    //     return customProducts;
-    // }
+    @JsonManagedReference
+    public Set<CustomProduct> getCustomProducts() {
+        return customProducts;
+    }
 
-    // public void setCustomProducts(Set<CustomProduct> customProducts) {
-    //     this.customProducts = customProducts;
-    // }
+    public void setCustomProducts(Set<CustomProduct> customProducts) {
+        this.customProducts = customProducts;
+    }
 
     public void patch(Seller newData) {
         // lo uso para poder implementar manualmente el patch en el rest controller

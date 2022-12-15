@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,9 +35,10 @@ public class CustomizationApply {
     @JoinColumn(name = "base_product_id_product")
     private BaseProduct baseProduct;
     
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "custom_product_id_product")
-    @NotNull
+    @JsonBackReference
     private CustomProduct customProduct;
 
     @OneToOne

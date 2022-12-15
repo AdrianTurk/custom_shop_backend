@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class CustomProduct {
     // @Enumerated(EnumType.STRING)
     // private LogicStatus status;
     
+    @JsonBackReference
     public Seller getSeller() {
         return seller;
     }
@@ -55,11 +57,11 @@ public class CustomProduct {
 
     @NotNull
     @ManyToOne
-    //@JsonBackReference
-    //@JoinColumn(name = "seller_id_seller")
+    @JoinColumn(name = "seller_id")
     private Seller seller;
     
     @OneToMany(mappedBy = "customProduct")
+    @JsonManagedReference
     private Set<CustomizationApply> customizationsApplied;
     
 }

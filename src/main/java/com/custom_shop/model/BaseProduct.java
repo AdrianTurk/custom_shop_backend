@@ -40,8 +40,9 @@ public class BaseProduct {
     @ColumnDefault("false")
     private boolean deleted = false;
 
-    @OneToMany(mappedBy = "baseProduct")
-    private Set<PosibleCustomization> posibleCustomizations;
+    //@OneToMany
+    //(mappedBy = "baseProduct")
+    //private Set<PosibleCustomization> posibleCustomizations;
 
     // @Enumerated(EnumType.STRING)
     // private LogicStatus status;
