@@ -150,27 +150,42 @@ VALUES
 
 /*Custom Products*/
 
-INSERT INTO `custom_shop`.`custom_products`(`id_custom_product`,`deleted`,`name`,`seller_id_seller`,`base_product_id_product`)
+INSERT INTO `custom_shop`.`custom_products`(`id_custom_product`,`deleted`,`name`,`seller_id`,`base_product_id_product`)
 VALUES
 	(1,false,"Remera Blanca con emoji 😋",1,6),
     (2,false,"Remera Blanca con emoji 🤪",1,6);
 
-INSERT INTO `custom_shop`.`customizations_applied`(`id_customization_apply`,`deleted`,`value`,`base_product_id_product`,`custom_product_id_product`,`customization_id_customization`)
+INSERT INTO `custom_shop`.`customizations_applied`(`id_customization_apply`,`deleted`,`value`,`custom_product_id_product`,`customization_id_customization`)
 VALUES
-    (1,false,'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/zany-face_1f92a.png',6,1,14),
-    (2,false,'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/face-savoring-food_1f60b.png',6,2,14);
+    (1,false,'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/zany-face_1f92a.png',1,14),
+    (2,false,'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/face-savoring-food_1f60b.png',2,14);
 
 /*Remeras frase*/
-INSERT INTO `custom_shop`.`custom_products`(`id_custom_product`,`deleted`,`name`,`seller_id_seller`,`base_product_id_product`)
+INSERT INTO `custom_shop`.`custom_products`(`id_custom_product`,`deleted`,`name`,`seller_id`,`base_product_id_product`)
 VALUES
 	(3,false,"Remera Blanca con inscripcion frase Messi",2,6),
     (4,false,"Remera Blanca con frase: It's True",2,6);
 
-INSERT INTO `custom_shop`.`customizations_applied`(`id_customization_apply`,`deleted`,`value`,`base_product_id_product`,`custom_product_id_product`,`customization_id_customization`)
+INSERT INTO `custom_shop`.`customizations_applied`(`id_customization_apply`,`deleted`,`value`,`custom_product_id_product`,`customization_id_customization`)
 VALUES
-    (3,false,'Que miras, bobo? /Notas: Arial 20pts Negro',6,3,17),
-    (4,false,"<h1> !FALSE </h1> <br> <h4> IT'S FUNNY BECAUSE </h4> <br> <h2> IT'S TRUE </h2> /Notas: Arial 26pts",6,4,17),
-    (5,false,"Amarillo Brillante",6,4,6);
+    (3,false,'Que miras, bobo? /Notas: Arial 20pts Negro',3,17),
+    (4,false,"<h1> !FALSE </h1> <br> <h4> IT'S FUNNY BECAUSE </h4> <br> <h2> IT'S TRUE </h2> /Notas: Arial 26pts",4,17),
+    (5,false,"Amarillo Brillante",4,6);
+
+INSERT INTO `custom_shop`.`buyers`(`token`,`name`)
+VALUES
+    ("TOKEN_TEST1","BUYER_TEST1"),
+    ("TOKEN_TEST2","BUYER_TEST2");
+
+INSERT INTO `custom_shop`.`cart_items`(`cart_item_id`,`quantity`,`product_id_custom_product`)
+VALUES
+    (1,2,1),
+    (2,1,2),
+    (3,1,3);
+
+INSERT INTO `custom_shop`.`carts`(`id`,`receiver_data`,`buyer_token`,`payment_selected_id_method`)
+VALUES
+    (1,"Calle falsa 123","TOKEN_TEST1",1);
 
 
 /*

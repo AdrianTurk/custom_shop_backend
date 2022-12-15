@@ -43,4 +43,8 @@ public class CustomizationApply {
 
     @OneToOne
     private Customization customization;
+
+    // @OneToOne
+    // private PosibleCustomization posibleCustomization;
+
 }

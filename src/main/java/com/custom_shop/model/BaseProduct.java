@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,9 +42,10 @@ public class BaseProduct {
     @ColumnDefault("false")
     private boolean deleted = false;
 
-    //@OneToMany
-    //(mappedBy = "baseProduct")
-    //private Set<PosibleCustomization> posibleCustomizations;
+    @OneToMany
+    (mappedBy = "baseProduct")
+    @JsonManagedReference
+    private Set<PosibleCustomization> posibleCustomizations;
 
     // @Enumerated(EnumType.STRING)
     // private LogicStatus status;

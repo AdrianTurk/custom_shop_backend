@@ -1,6 +1,6 @@
 package com.custom_shop.model;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,12 +26,14 @@ public class PosibleCustomization {
     private long id;
     private long hours_delay=0;
     
-    private BigInteger addedCost = new BigInteger("0");
+    private BigDecimal addedCost = new BigDecimal("0");
     
     @ManyToOne
     @JoinColumn(name = "base_product_id_product")
+    @JsonBackReference
     private BaseProduct baseProduct;
     
     @ManyToOne
+    @JsonBackReference
     private Customization customization;
 }

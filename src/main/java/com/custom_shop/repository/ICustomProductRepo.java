@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.custom_shop.model.CustomProduct;
 
-@RepositoryRestResource(path = "custom_products")
+@RepositoryRestResource(path = "customProducts")
 public interface ICustomProductRepo extends JpaRepository<CustomProduct, Long> {
         // For MGR
 

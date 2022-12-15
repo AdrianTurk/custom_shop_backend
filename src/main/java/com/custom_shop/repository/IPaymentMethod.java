@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.custom_shop.model.PaymentMethod;
 
-@RepositoryRestResource(path = "payment_methods")
+@RepositoryRestResource(path = "paymentMethods")
 public interface IPaymentMethod extends JpaRepository<PaymentMethod, Long> {
     @Override
     default void deleteById(Long id) {
