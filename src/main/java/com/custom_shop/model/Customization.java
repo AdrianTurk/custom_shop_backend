@@ -1,5 +1,7 @@
 package com.custom_shop.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,8 +27,9 @@ public class Customization {
     // @Column(unique=true)
     private String name;
     private String description;
-
-    // private BigDecimal addedPrice;
+    
+    @ColumnDefault("0")
+    private BigDecimal addedPrice;
     
     @ColumnDefault("0")
     private long hoursDelay=0;

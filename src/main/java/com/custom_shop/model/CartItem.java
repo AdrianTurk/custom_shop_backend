@@ -1,6 +1,7 @@
 package com.custom_shop.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,24 +24,25 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cartItemId;
-    
+
     @NotNull
     @OneToOne
     private CustomProduct product;
-    
+
     @NotNull
-    @Min(value=1)
+    @Min(value = 1)
     private long quantity;
 
     // @ManyToOne
     // private Cart cart;
 
     public BigDecimal getFinalUnitPrice() {
-        BigDecimal ret;
-        ret = product.getBaseProduct().getBasePrice();
-         product.getCustomizationsApplied().forEach(cust -> {
-             ret.add(cust.getPosibleCustomization().getAddedCost());
-         });
+
+        BigDecimal ret = product.getBaseProduct().getBasePrice();
+
+        for (CustomizationApply item : product.getCustomizationsApplied()) {
+            ret = ret.add(item.getCustomization().getAddedPrice());
+        }
         return ret;
     };
 }

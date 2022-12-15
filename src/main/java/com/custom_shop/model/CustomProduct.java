@@ -60,7 +60,7 @@ public class CustomProduct {
     private Seller seller;
     
     @OneToMany(mappedBy = "customProduct")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Set<CustomizationApply> customizationsApplied;
     
 }
