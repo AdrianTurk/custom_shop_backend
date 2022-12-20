@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +36,7 @@ public class CustomProduct {
 
     // @Enumerated(EnumType.STRING)
     // private LogicStatus status;
-    
+
     @JsonBackReference
     public Seller getSeller() {
         return seller;
@@ -48,10 +47,11 @@ public class CustomProduct {
     }
 
     @ColumnDefault("false")
+    @NotNull
     private boolean deleted = false;
-   
+
     @ManyToOne
-    //(mappedBy = "baseProduct")
+    // (mappedBy = "baseProduct")
     private BaseProduct baseProduct;
 
     @NotNull
@@ -59,11 +59,10 @@ public class CustomProduct {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
+    private String imageSampleUrl = "";
 
-    private String imageSampleUrl="";
-    
     @OneToMany(mappedBy = "customProduct")
-    //@JsonManagedReference
+    // @JsonManagedReference
     private Set<CustomizationApply> customizationsApplied;
 
     public BigDecimal getFinalUnitPrice() {
@@ -75,5 +74,5 @@ public class CustomProduct {
         }
         return ret;
     };
-    
+
 }

@@ -27,14 +27,15 @@ public class CustomizationApply {
     private long idCustomizationApply;
 
     private String value;
-    
+
     @ColumnDefault("false")
+    @NotNull
     private boolean deleted = false;
 
     @ManyToOne
     @JoinColumn(name = "base_product_id_product")
     private BaseProduct baseProduct;
-    
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "custom_product_id_product")

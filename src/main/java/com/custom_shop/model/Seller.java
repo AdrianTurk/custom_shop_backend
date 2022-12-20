@@ -47,6 +47,7 @@ public class Seller {
     // private LogicStatus status;
 
     @ColumnDefault("false")
+    @NotNull
     private boolean deleted = false;
 
     @ManyToMany

@@ -29,6 +29,7 @@ public class PaymentMethod {
     private String description;
 
     @ColumnDefault("false")
+    @NotNull
     private boolean deleted = false;
 
     public PaymentMethod(String method, String description) {

@@ -27,13 +27,14 @@ public class Customization {
     // @Column(unique=true)
     private String name;
     private String description;
-    
+
     @ColumnDefault("0")
     private BigDecimal addedPrice;
-    
+
     @ColumnDefault("0")
-    private long hoursDelay=0;
+    private long hoursDelay = 0;
 
     @ColumnDefault("false")
+    @NotNull
     private boolean deleted = false;
 }

@@ -1,7 +1,6 @@
 package com.custom_shop.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,8 +34,9 @@ public class CartItem {
     @Min(value = 1)
     private long quantity;
 
-    // @ManyToOne
-    // private Cart cart;
+    @ColumnDefault("false")
+    @NotNull
+    private boolean deleted = false;
 
     public BigDecimal getFinalUnitPrice() {
 
