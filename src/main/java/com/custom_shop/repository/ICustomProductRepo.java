@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.custom_shop.model.CustomProduct;
 
 @RepositoryRestResource(path = "customProducts")
-@CrossOrigin
+@CrossOrigin(origins = { "${settings.cors_origin}" })
 public interface ICustomProductRepo extends JpaRepository<CustomProduct, Long> {
         // For MGR
 
