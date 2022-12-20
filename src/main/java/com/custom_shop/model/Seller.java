@@ -32,15 +32,15 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idSeller;
 
-    @NotNull
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @NotNull
     @Email
+    @Column(unique = true, nullable = false)
     private String email;
 
     @NotNull
+    @Column(nullable = false)
     private String password;
 
     // @Enumerated(EnumType.STRING)
