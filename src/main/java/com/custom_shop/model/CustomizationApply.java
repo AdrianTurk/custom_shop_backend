@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,8 +1,8 @@
 package com.custom_shop.model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,8 +17,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -94,6 +92,13 @@ public class Seller {
                 this.paymentMethods.addAll(newData.paymentMethods);
             }
         }
+    }
+
+    public void removePaymentMethod(Long id) {
+        
+        this.paymentMethods.removeIf(pymnt->pymnt.getId()==id);
+        
+        
     }
 
 }

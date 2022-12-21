@@ -3,7 +3,6 @@ package com.custom_shop.controller;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;

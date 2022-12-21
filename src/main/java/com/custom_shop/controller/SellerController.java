@@ -77,17 +77,30 @@ public class SellerController {
 
         item.get().addPaymentMethod(method);
 
-        return new ResponseEntity<>(method ,HttpStatus.CREATED);
+        return new ResponseEntity<>(method, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}/paymentMethods")
-    public @ResponseBody ResponseEntity<Page<PaymentMethod>> getPaymentMethods(@PathVariable("id") long id, Pageable page) {
+    public @ResponseBody ResponseEntity<Page<PaymentMethod>> getPaymentMethods(@PathVariable("id") long id,
+            Pageable page) {
         Optional<Seller> item = sellersRepo.findById(id);
         if (item.isEmpty() || item.get().isDeleted())
             return ResponseEntity.notFound().build();
 
         return new ResponseEntity<>(new PageImpl<>(item.get().getPaymentMethods(), page, 0l), HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/{id}/paymentMethods")
+    public @ResponseBody ResponseEntity<?> logicDeletePaymentMethod(@PathVariable("id") long id,
+            @RequestBody PaymentMethod method) {
+        Optional<Seller> item = sellersRepo.findById(id);
+        if (item.isEmpty() || item.get().isDeleted())
+            return ResponseEntity.notFound().build();
+
+        item.get().removePaymentMethod(method.getId());
+        sellersRepo.save(item.get());
+        return ResponseEntity.noContent().build();
     }
 
     // @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")

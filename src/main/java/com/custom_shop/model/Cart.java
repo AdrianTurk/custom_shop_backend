@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AccessLevel;
 
