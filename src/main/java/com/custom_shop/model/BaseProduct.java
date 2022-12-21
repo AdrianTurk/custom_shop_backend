@@ -50,7 +50,6 @@ public class BaseProduct {
     @Setter(AccessLevel.NONE)
     private List<Customization> posibleCustomizations;
 
-
     public List<Customization> getPosibleCustomizations() {
         return new ArrayList<>(posibleCustomizations);
     }

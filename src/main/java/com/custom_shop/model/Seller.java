@@ -2,7 +2,6 @@ package com.custom_shop.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -95,10 +94,6 @@ public class Seller {
     }
 
     public void removePaymentMethod(Long id) {
-        
-        this.paymentMethods.removeIf(pymnt->pymnt.getId()==id);
-        
-        
+        this.paymentMethods.removeIf(pymnt -> pymnt.getId() == id);
     }
-
 }

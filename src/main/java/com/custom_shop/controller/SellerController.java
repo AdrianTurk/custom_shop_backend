@@ -103,22 +103,6 @@ public class SellerController {
         return ResponseEntity.noContent().build();
     }
 
-    // @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
-    // public ResponseEntity<Customer> updateCustomer(@PathVariable String id,
-    // @RequestBody JsonPatch patch) {
-    // try {
-    // Customer customer =
-    // customerService.findCustomer(id).orElseThrow(CustomerNotFoundException::new);
-    // Customer customerPatched = applyPatchToCustomer(patch, customer);
-    // customerService.updateCustomer(customerPatched);
-    // return ResponseEntity.ok(customerPatched);
-    // } catch (JsonPatchException | JsonProcessingException e) {
-    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    // } catch (CustomerNotFoundException e) {
-    // return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    // }
-    // }
-
     @PatchMapping(path = "/{sellerID}")
     public void patchSeller(@PathVariable("sellerID") Long sellerID, @RequestBody Seller seller) {
         Seller foundSeller;
@@ -126,6 +110,5 @@ public class SellerController {
             foundSeller.patch(seller);
             sellersRepo.save(foundSeller);
         }
-
     }
 }
