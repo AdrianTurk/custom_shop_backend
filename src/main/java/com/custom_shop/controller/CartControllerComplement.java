@@ -22,7 +22,7 @@ public class CartControllerComplement {
     ICart cartRepo;
 
     @Transactional
-    @DeleteMapping("paymentMethods/{id}")
+    @DeleteMapping("carts/{id}")
     public @ResponseBody ResponseEntity<?> logicDelete(@PathVariable("id") long id) {
         Optional<Cart> item = cartRepo.findById(id);
         if (item.isEmpty() || item.get().isDeleted())

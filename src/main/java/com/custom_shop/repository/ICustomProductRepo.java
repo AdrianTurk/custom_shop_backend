@@ -17,14 +17,14 @@ public interface ICustomProductRepo extends JpaRepository<CustomProduct, Long> {
         // public Optional<Seller> findById(long id);
 
         // public Optional<Seller> findByName(String name);
-        @Override
-        default void deleteById(Long id) {
-                CustomProduct subject = this.findById(id).get();
-                if (subject != null) {
-                        subject.setDeleted(true);
-                        this.save(subject);
-                } else
-                        throw new IllegalArgumentException("No se encontró elemento con ID: " + id);
-        }
+        // @Override
+        // default void deleteById(Long id) {
+        //         CustomProduct subject = this.findById(id).get();
+        //         if (subject != null) {
+        //                 subject.setDeleted(true);
+        //                 this.save(subject);
+        //         } else
+        //                 throw new IllegalArgumentException("No se encontró elemento con ID: " + id);
+        // }
 
 }
