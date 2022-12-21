@@ -21,7 +21,7 @@ public class PaymentMethod {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idMethod;
+    private long id;
 
     @NotNull
     @Column(unique = true)

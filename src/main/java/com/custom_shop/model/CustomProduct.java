@@ -1,6 +1,8 @@
 package com.custom_shop.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,24 +20,24 @@ import org.hibernate.annotations.ColumnDefault;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AccessLevel;
 
 @Getter
 @Setter
 @Entity(name = "custom_products")
-@NoArgsConstructor
 public class CustomProduct {
+    public CustomProduct() {
+        this.customizationsApplied = new ArrayList<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCustomProduct;
+    private long id;
 
     @NotNull
     @Column(unique = true)
     private String name;
-
-    // @Enumerated(EnumType.STRING)
-    // private LogicStatus status;
 
     @JsonBackReference
     public Seller getSeller() {
@@ -63,7 +65,17 @@ public class CustomProduct {
 
     @OneToMany(mappedBy = "customProduct")
     // @JsonManagedReference
-    private Set<CustomizationApply> customizationsApplied;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private List<CustomizationApply> customizationsApplied;
+
+    public List<CustomizationApply> getCustomizationsApplied() {
+        return new ArrayList<>(this.customizationsApplied);
+    }
+
+    public void applyCustomization(CustomizationApply customization) {
+        this.customizationsApplied.add(customization);
+    }
 
     public BigDecimal getFinalUnitPrice() {
 
@@ -74,5 +86,4 @@ public class CustomProduct {
         }
         return ret;
     };
-
 }

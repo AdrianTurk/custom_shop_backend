@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Customization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCustomization;
+    private long id;
 
     @NotNull
     // @Column(unique=true)

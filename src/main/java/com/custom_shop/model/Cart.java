@@ -1,5 +1,6 @@
 package com.custom_shop.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,28 +16,43 @@ import org.hibernate.annotations.ColumnDefault;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AccessLevel;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity(name = "carts")
 public class Cart {
+
+    public Cart() {
+        this.cartItems = new ArrayList<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
+    private Long id;
 
     @NotNull
     // @Column(unique=true)
     @OneToOne
-    Buyer buyer;
+    private Buyer buyer;
 
     @OneToMany
-    List<CartItem> cartItems;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private List<CartItem> cartItems;
+
+    public List<CartItem> getCartItems() {
+        return new ArrayList<>(cartItems);
+    }
+
+    public void addCartItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
+    }
 
     @OneToOne
-    PaymentMethod paymentSelected;
+    private PaymentMethod paymentSelected;
 
-    String receiverData;
+    private String receiverData;
 
     @ColumnDefault("false")
     @NotNull

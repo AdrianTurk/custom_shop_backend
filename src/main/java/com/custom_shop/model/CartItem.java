@@ -15,6 +15,7 @@ import org.hibernate.annotations.ColumnDefault;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AccessLevel;
 
 @Getter
 @Setter
@@ -24,7 +25,7 @@ public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long cartItemId;
+    private long id;
 
     @NotNull
     @OneToOne
@@ -41,10 +42,10 @@ public class CartItem {
     public BigDecimal getFinalUnitPrice() {
 
         BigDecimal ret = product.getBaseProduct().getBasePrice();
-
-        for (CustomizationApply item : product.getCustomizationsApplied()) {
-            ret = ret.add(item.getCustomization().getAddedPrice());
-        }
+        // TODO: Repair:
+        // for (CustomizationApply item : product.getCustomizationsApplied()) {
+        // ret = ret.add(item.getCustomization().getAddedPrice());
+        // }
         return ret;
     };
 }

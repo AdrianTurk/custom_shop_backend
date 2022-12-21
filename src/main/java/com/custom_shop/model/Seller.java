@@ -1,6 +1,8 @@
 package com.custom_shop.model;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,18 +21,22 @@ import org.hibernate.annotations.ColumnDefault;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AccessLevel;
 
 @Getter
 @Setter
 @Entity(name = "sellers")
-@NoArgsConstructor
 public class Seller {
+
+    public Seller() {
+        this.customProducts = new ArrayList<CustomProduct>();
+        this.paymentMethods = new ArrayList<PaymentMethod>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idSeller;
+    private long id;
 
     @Column(unique = true, nullable = false)
     private String name;
@@ -43,26 +49,35 @@ public class Seller {
     @Column(nullable = false)
     private String password;
 
-    // @Enumerated(EnumType.STRING)
-    // private LogicStatus status;
-
     @ColumnDefault("false")
     @NotNull
     private boolean deleted = false;
 
     @ManyToMany
-    Set<PaymentMethod> paymentMethods;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private List<PaymentMethod> paymentMethods;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller", fetch = FetchType.LAZY)
-    Set<CustomProduct> customProducts;
-
-    @JsonManagedReference
-    public Set<CustomProduct> getCustomProducts() {
-        return customProducts;
+    public List<PaymentMethod> getPaymentMethods() {
+        return new ArrayList<>(this.paymentMethods);
     }
 
-    public void setCustomProducts(Set<CustomProduct> customProducts) {
-        this.customProducts = customProducts;
+    public void addPaymentMethod(PaymentMethod item) {
+        this.paymentMethods.add(item);
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller", fetch = FetchType.LAZY)
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private List<CustomProduct> customProducts;
+
+    // @JsonManagedReference
+    public List<CustomProduct> getCustomProducts() {
+        return new ArrayList<>(customProducts);
+    }
+
+    public void addCustomProduct(CustomProduct item) {
+        this.customProducts.add(item);
     }
 
     public void patch(Seller newData) {

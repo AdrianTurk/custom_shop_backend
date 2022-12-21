@@ -8,7 +8,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.custom_shop.model.PaymentMethod;
 import com.custom_shop.model.Seller;
 import com.custom_shop.repository.ISellerRepo;
 
@@ -62,6 +65,29 @@ public class SellerController {
         item.get().setDeleted(true);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @Transactional
+    @PostMapping("/{id}/paymentMethods")
+    public @ResponseBody ResponseEntity<?> addPaymentMethod(@PathVariable("id") long id,
+            @RequestBody PaymentMethod method) {
+        Optional<Seller> item = sellersRepo.findById(id);
+        if (item.isEmpty() || item.get().isDeleted())
+            return ResponseEntity.notFound().build();
+
+        item.get().addPaymentMethod(method);
+
+        return new ResponseEntity<>(method ,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}/paymentMethods")
+    public @ResponseBody ResponseEntity<Page<PaymentMethod>> getPaymentMethods(@PathVariable("id") long id, Pageable page) {
+        Optional<Seller> item = sellersRepo.findById(id);
+        if (item.isEmpty() || item.get().isDeleted())
+            return ResponseEntity.notFound().build();
+
+        return new ResponseEntity<>(new PageImpl<>(item.get().getPaymentMethods(), page, 0l), HttpStatus.OK);
+
     }
 
     // @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")

@@ -1,7 +1,8 @@
 package com.custom_shop.model;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,18 +15,21 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AccessLevel;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity(name = "base_products")
 public class BaseProduct {
     // dominio de "los gestores"
+    public BaseProduct() {
+        this.posibleCustomizations = new ArrayList<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduct;
+    private Long id;
 
     @NotNull
     @Column(unique = true)
@@ -42,8 +46,17 @@ public class BaseProduct {
     private boolean deleted = false;
 
     @ManyToMany
-    private Set<Customization> posibleCustomizations;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private List<Customization> posibleCustomizations;
 
-    // @Enumerated(EnumType.STRING)
-    // private LogicStatus status;
+
+    public List<Customization> getPosibleCustomizations() {
+        return new ArrayList<>(posibleCustomizations);
+    }
+
+    public void addPosibleCustomization(Customization item) {
+        this.posibleCustomizations.add(item);
+    }
+
 }

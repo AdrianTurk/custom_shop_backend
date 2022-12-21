@@ -24,7 +24,7 @@ import lombok.Setter;
 public class CustomizationApply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCustomizationApply;
+    private long id;
 
     private String value;
 
@@ -39,7 +39,7 @@ public class CustomizationApply {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "custom_product_id_product")
-    @JsonBackReference
+    // @JsonBackReference
     private CustomProduct customProduct;
 
     @OneToOne
