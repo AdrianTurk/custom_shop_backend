@@ -15,16 +15,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "payment_methods")
 @NoArgsConstructor
+@Entity(name = "payment_methods")
 public class PaymentMethod {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
-    @Column(unique = true)
+    // @NotNull
+    @Column(unique = true, nullable = false)
     private String methodName;
     private String description;
 
@@ -32,8 +32,4 @@ public class PaymentMethod {
     @NotNull
     private boolean deleted = false;
 
-    public PaymentMethod(String method, String description) {
-        this.methodName = method;
-        this.description = description;
-    }
 }

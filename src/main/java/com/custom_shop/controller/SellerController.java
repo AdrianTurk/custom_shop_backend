@@ -28,9 +28,9 @@ import com.custom_shop.model.PaymentMethod;
 import com.custom_shop.model.Seller;
 import com.custom_shop.repository.ISellerRepo;
 
-@RestController
-@RequestMapping("/api/sellers")
-@CrossOrigin(origins = { "${settings.cors_origin}" })
+// @RestController
+// @RequestMapping("/api/sellers")
+// @CrossOrigin(origins = { "${settings.cors_origin}" })
 public class SellerController {
 
     @Autowired

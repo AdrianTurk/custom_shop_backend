@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -60,9 +60,10 @@ public class CustomProduct {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
-    private String imageSampleUrl = "";
+    private String imageSampleURL = "";
 
-    @OneToMany(mappedBy = "customProduct")
+    @OneToMany
+    // (mappedBy = "customProduct")
     // @JsonManagedReference
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

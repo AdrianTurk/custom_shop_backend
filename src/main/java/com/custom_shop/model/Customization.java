@@ -25,7 +25,7 @@ public class Customization {
     private long id;
 
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     private String name;
     private String description;
 
