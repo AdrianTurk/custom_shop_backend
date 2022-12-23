@@ -9,5 +9,4 @@ import com.custom_shop.model.Category;
 @RepositoryRestResource(path = "categories")
 @CrossOrigin(origins = { "${settings.cors_origin}" })
 public interface ICategoryRepo extends JpaRepository<Category, Long> {
-
 }

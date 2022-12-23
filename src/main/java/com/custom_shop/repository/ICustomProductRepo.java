@@ -10,5 +10,4 @@ import com.custom_shop.model.CustomProduct;
 @CrossOrigin(origins = { "${settings.cors_origin}" })
 public interface ICustomProductRepo extends JpaRepository<CustomProduct, Long> {
         // For MGR
-
 }

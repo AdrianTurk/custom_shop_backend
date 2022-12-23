@@ -9,5 +9,4 @@ import com.custom_shop.model.PaymentMethod;
 @RepositoryRestResource(path = "paymentMethods")
 @CrossOrigin(origins = { "${settings.cors_origin}" })
 public interface IPaymentMethod extends JpaRepository<PaymentMethod, Long> {
-
 }

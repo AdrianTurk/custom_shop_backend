@@ -9,5 +9,4 @@ import com.custom_shop.model.Cart;
 @RepositoryRestResource(path = "carts")
 @CrossOrigin(origins = { "${settings.cors_origin}" })
 public interface ICart extends JpaRepository<Cart, Long> {
-
 }
