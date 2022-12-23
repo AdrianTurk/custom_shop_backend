@@ -1,6 +1,5 @@
 package com.custom_shop.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +25,10 @@ import lombok.AccessLevel;
 @Getter
 @Setter
 @Entity(name = "custom_products")
+@SQLDelete(sql = "UPDATE custom_products SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class CustomProduct {
+
     public CustomProduct() {
         this.customizationsApplied = new ArrayList<>();
     }
@@ -35,35 +38,36 @@ public class CustomProduct {
     private long id;
 
     @NotNull
-    @Column(unique = true)
+    @Size(min = 3, max = 45)
+    @Column(unique = true, nullable = false, length = 45)
     private String name;
 
-    @JsonBackReference
-    public Seller getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Seller seller) {
-        this.seller = seller;
-    }
+    @Size(min = 3, max = 512)
+    @Column(length = 512)
+    private String image = "";
 
     @ColumnDefault("false")
-    @NotNull
     private boolean deleted = false;
 
+    // @JsonBackReference
+
     @ManyToOne
-    // (mappedBy = "baseProduct")
+    @JoinColumn(nullable = false)
     private BaseProduct baseProduct;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private Seller seller;
+    @JoinColumn(nullable = false)
+    private SellPoint sellPoint;
 
-    private String imageSampleURL = "";
+    public SellPoint getSellPoint() {
+        return sellPoint;
+    }
 
-    @OneToMany
-    // (mappedBy = "customProduct")
+    public void setSellPoint(SellPoint sellPoint) {
+        this.sellPoint = sellPoint;
+    }
+
+    @OneToMany(mappedBy = "customProduct")
     // @JsonManagedReference
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
@@ -77,13 +81,13 @@ public class CustomProduct {
         this.customizationsApplied.add(customization);
     }
 
-    public BigDecimal getFinalUnitPrice() {
+    // public BigDecimal getFinalUnitPrice() {
 
-        BigDecimal ret = baseProduct.getBasePrice();
+    // BigDecimal ret = baseProduct.getBasePrice();
 
-        for (CustomizationApply item : customizationsApplied) {
-            ret = ret.add(item.getCustomization().getAddedPrice());
-        }
-        return ret;
-    };
+    // for (CustomizationApply item : customizationsApplied) {
+    // ret = ret.add(item.getCustomization().getAddedPrice());
+    // }
+    // return ret;
+    // };
 }

@@ -9,11 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +27,8 @@ import lombok.AccessLevel;
 @Getter
 @Setter
 @Entity(name = "base_products")
+@SQLDelete(sql = "UPDATE base_products SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class BaseProduct {
 
     public BaseProduct() {
@@ -33,36 +40,45 @@ public class BaseProduct {
     private Long id;
 
     @NotNull
-    @Column(unique = true, nullable = false)
+    @Size(min = 10, max = 45)
+    @Column(unique = true, nullable = false, length = 45)
     private String name;
 
+    @Min(0)
+    @ColumnDefault(value = "0")
     private BigDecimal basePrice; // For precision
 
+    @Size(max = 512)
+    @Column(unique = true, length = 45)
     private String description;
 
+    @Column(nullable = false)
+    @ColumnDefault(value = "0")
     private Long delayTimeHours;
 
-    @ColumnDefault("false")
     @NotNull
+    @ColumnDefault("false")
     private boolean deleted = false;
+
+    @Size(max = 512)
+    @Column(length = 512)
+    private String image;
 
     @ManyToOne
     @NotNull
+    @JoinColumn(nullable = false)
     private Category category;
 
-    private String SampleImageURL;
-
-    @ManyToMany
+    @OneToMany(mappedBy = "baseProduct")
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private List<Customization> posibleCustomizations;
+    private List<PosibleCustomization> posibleCustomizations;
 
-    public List<Customization> getPosibleCustomizations() {
+    public List<PosibleCustomization> getPosibleCustomizations() {
         return new ArrayList<>(this.posibleCustomizations);
     }
 
-    public void addPosibleCustomization(Customization item) {
+    public void addPosibleCustomization(PosibleCustomization item) {
         this.posibleCustomizations.add(item);
     }
-
 }
