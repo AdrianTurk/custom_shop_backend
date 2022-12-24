@@ -1,6 +1,7 @@
 package com.custom_shop.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,5 +50,13 @@ public class User {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "ownerUser")
-    private List<SellPoint> sellPoints;
+    private Set<SellPoint> sellPoints;
+
+    public Set<SellPoint> getSellPoint() {
+        return new HashSet<>(this.sellPoints);
+    }
+
+    public void addSellPoint(SellPoint sellPoint) {
+        this.sellPoints.add(sellPoint);
+    }
 }

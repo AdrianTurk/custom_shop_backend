@@ -1,7 +1,7 @@
 package com.custom_shop.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +29,11 @@ import lombok.AccessLevel;
 @SQLDelete(sql = "UPDATE sell_points SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class SellPoint {
+    public SellPoint() {
+        this.paymentMethods = new HashSet<>();
+        this.customProducts = new HashSet<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -48,10 +53,10 @@ public class SellPoint {
     @ManyToMany
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private List<PaymentMethod> paymentMethods;
+    private Set<PaymentMethod> paymentMethods;
 
-    public List<PaymentMethod> getPaymentMethods() {
-        return new ArrayList<>(this.paymentMethods);
+    public Set<PaymentMethod> getPaymentMethods() {
+        return new HashSet<>(this.paymentMethods);
     }
 
     public void addPaymentMethod(PaymentMethod item) {
@@ -61,7 +66,7 @@ public class SellPoint {
     @OneToMany(mappedBy = "sellPoint")
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private List<CustomProduct> customProducts;
+    private Set<CustomProduct> customProducts;
 
     @ManyToOne()
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
@@ -69,8 +74,8 @@ public class SellPoint {
     @Setter(AccessLevel.NONE)
     private User ownerUser;
 
-    public List<CustomProduct> getCustomProducts() {
-        return new ArrayList<>(this.customProducts);
+    public Set<CustomProduct> getCustomProducts() {
+        return new HashSet<>(this.customProducts);
     }
 
     public void addCustomProducts(CustomProduct item) {

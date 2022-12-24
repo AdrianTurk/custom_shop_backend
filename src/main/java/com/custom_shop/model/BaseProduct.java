@@ -1,8 +1,8 @@
 package com.custom_shop.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ import lombok.AccessLevel;
 public class BaseProduct {
 
     public BaseProduct() {
-        this.posibleCustomizations = new ArrayList<>();
+        this.posibleCustomizations = new HashSet<>();
     }
 
     @Id
@@ -72,10 +72,10 @@ public class BaseProduct {
     @OneToMany(mappedBy = "baseProduct")
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private List<PosibleCustomization> posibleCustomizations;
+    private Set<PosibleCustomization> posibleCustomizations;
 
-    public List<PosibleCustomization> getPosibleCustomizations() {
-        return new ArrayList<>(this.posibleCustomizations);
+    public Set<PosibleCustomization> getPosibleCustomizations() {
+        return new HashSet<>(this.posibleCustomizations);
     }
 
     public void addPosibleCustomization(PosibleCustomization item) {

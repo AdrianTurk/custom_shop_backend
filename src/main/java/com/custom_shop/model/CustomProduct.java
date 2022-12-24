@@ -1,7 +1,7 @@
 package com.custom_shop.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ import lombok.AccessLevel;
 public class CustomProduct {
 
     public CustomProduct() {
-        this.customizationsApplied = new ArrayList<>();
+        this.customizationsApplied = new HashSet<>();
     }
 
     @Id
@@ -71,10 +71,10 @@ public class CustomProduct {
     // @JsonManagedReference
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private List<CustomizationApply> customizationsApplied;
+    private Set<CustomizationApply> customizationsApplied;
 
-    public List<CustomizationApply> getCustomizationsApplied() {
-        return new ArrayList<>(this.customizationsApplied);
+    public Set<CustomizationApply> getCustomizationsApplied() {
+        return new HashSet<>(this.customizationsApplied);
     }
 
     public void applyCustomization(CustomizationApply customization) {

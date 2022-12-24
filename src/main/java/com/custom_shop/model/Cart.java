@@ -29,9 +29,9 @@ import lombok.AccessLevel;
 @Where(clause = "deleted=false")
 public class Cart {
 
-    // public Cart() {
-    // this.cartItems = new ArrayList<>();
-    // }
+    public Cart() {
+        this.cartItems = new ArrayList<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,5 +65,4 @@ public class Cart {
     public void addCartItem(CartItem cartItem) {
         this.cartItems.add(cartItem);
     }
-
 }
