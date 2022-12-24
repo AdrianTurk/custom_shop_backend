@@ -27,7 +27,7 @@ public class PaymentMethod {
     // private long id;
 
     @NotNull
-    @Size(min = 3, max = 3)
+    @Size(min = 2, max = 3)
     @Id
     @Column(unique = true, nullable = false, length = 3)
     private String id;

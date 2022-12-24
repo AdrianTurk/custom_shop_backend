@@ -4,7 +4,9 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.NoSuchElementException;
 
+import org.hibernate.id.IdentifierGenerationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,4 +34,12 @@ public class GlobalExceptionHandler {
     String SQLIntegrityConstraint(SQLIntegrityConstraintViolationException ex){
         return ex.getLocalizedMessage();
     }
+
+    @ExceptionHandler(IdentifierGenerationException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String idNeeded(IdentifierGenerationException ex){
+        return "Request mal armada, es necesario especificar id : " + ex.getLocalizedMessage();
+    }
+
 }
