@@ -52,11 +52,11 @@ public class CustomProduct {
     // @JsonBackReference
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "base_product_id", referencedColumnName = "id", nullable = false)
     private BaseProduct baseProduct;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "sell_point_id", referencedColumnName = "id", nullable = false)
     private SellPoint sellPoint;
 
     public SellPoint getSellPoint() {

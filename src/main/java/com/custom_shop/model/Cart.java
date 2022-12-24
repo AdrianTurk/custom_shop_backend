@@ -45,13 +45,12 @@ public class Cart {
     @NotNull
     private boolean deleted = false;
 
-    @NotNull
-    // @Column(unique=true)
     @ManyToOne
+    @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
     private User ownerUser;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "paymentMethod_id", referencedColumnName = "id", nullable = false)
     private PaymentMethod paymentSelected;
 
     @OneToMany(mappedBy = "cart")

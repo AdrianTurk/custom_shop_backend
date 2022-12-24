@@ -35,7 +35,7 @@ public class CartItem {
     private long quantity;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private CustomProduct product;
 
     @NotNull
@@ -44,7 +44,7 @@ public class CartItem {
     private boolean deleted = false;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false)
     private Cart cart;
 
     // public BigDecimal getFinalUnitPrice() {

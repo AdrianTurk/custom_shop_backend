@@ -39,16 +39,16 @@ public class CustomizationApply {
     private boolean deleted = false;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "base_product_id", referencedColumnName = "id", nullable = false)
     private BaseProduct baseProduct;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "posibleCustomization_id", referencedColumnName = "id", nullable = false)
     private PosibleCustomization customization;
 
     // @NotNull
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "custom_product_id", referencedColumnName = "id", nullable = false)
     // @JsonBackReference
     private CustomProduct customProduct;
 

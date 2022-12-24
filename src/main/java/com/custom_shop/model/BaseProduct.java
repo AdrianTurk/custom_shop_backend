@@ -66,7 +66,7 @@ public class BaseProduct {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "baseProduct")

@@ -52,6 +52,6 @@ public class PosibleCustomization {
     private long hoursDelay;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "base_product_id", referencedColumnName = "id", nullable = false)
     private BaseProduct baseProduct;
 }

@@ -64,7 +64,7 @@ public class SellPoint {
     private List<CustomProduct> customProducts;
 
     @ManyToOne()
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private User ownerUser;
