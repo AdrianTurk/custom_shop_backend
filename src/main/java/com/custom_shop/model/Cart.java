@@ -64,5 +64,6 @@ public class Cart {
 
     public void addCartItem(CartItem cartItem) {
         this.cartItems.add(cartItem);
+        cartItem.setCart(this);
     }
 }

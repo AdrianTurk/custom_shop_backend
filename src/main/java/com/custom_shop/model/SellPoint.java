@@ -70,8 +70,6 @@ public class SellPoint {
 
     @ManyToOne()
     @JoinColumn(name = "owner_user_id", referencedColumnName = "id", nullable = false)
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private User ownerUser;
 
     public Set<CustomProduct> getCustomProducts() {
@@ -80,5 +78,6 @@ public class SellPoint {
 
     public void addCustomProducts(CustomProduct item) {
         this.customProducts.add(item);
+        item.setSellPoint(this);
     }
 }

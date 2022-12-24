@@ -62,5 +62,6 @@ public class User {
 
     public void addSellPoint(SellPoint sellPoint) {
         this.sellPoints.add(sellPoint);
+        sellPoint.setOwnerUser(this);
     }
 }

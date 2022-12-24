@@ -80,5 +80,6 @@ public class BaseProduct {
 
     public void addPosibleCustomization(PosibleCustomization item) {
         this.posibleCustomizations.add(item);
+        item.setBaseProduct(this);
     }
 }
