@@ -27,6 +27,10 @@ import lombok.AccessLevel;
 @Where(clause = "deleted=false")
 public class User {
 
+    public User() {
+        sellPoints = new HashSet<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
