@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
@@ -27,10 +24,7 @@ import lombok.Setter;
 @Entity(name = "posible_customizations")
 @SQLDelete(sql = "UPDATE posible_customizations SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-public class PosibleCustomization {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class PosibleCustomization extends BaseEntity {
 
     @NotNull
     @Size(min = 10, max = 45)

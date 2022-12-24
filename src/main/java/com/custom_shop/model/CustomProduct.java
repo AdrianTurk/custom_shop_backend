@@ -5,16 +5,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -27,15 +23,11 @@ import lombok.AccessLevel;
 @Entity(name = "custom_products")
 @SQLDelete(sql = "UPDATE custom_products SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-public class CustomProduct {
+public class CustomProduct extends BaseEntity {
 
     public CustomProduct() {
         this.customizationsApplied = new HashSet<>();
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     @NotNull
     @Size(min = 3, max = 45)
@@ -46,11 +38,7 @@ public class CustomProduct {
     @Column(length = 512)
     private String image = "";
 
-    @ColumnDefault("false")
-    private boolean deleted = false;
-
     // @JsonBackReference
-
     @ManyToOne
     @JoinColumn(name = "base_product_id", referencedColumnName = "id", nullable = false)
     private BaseProduct baseProduct;

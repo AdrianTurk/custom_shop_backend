@@ -6,9 +6,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -29,15 +26,11 @@ import lombok.AccessLevel;
 @Entity(name = "base_products")
 @SQLDelete(sql = "UPDATE base_products SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-public class BaseProduct {
+public class BaseProduct extends BaseEntity {
 
     public BaseProduct() {
         this.posibleCustomizations = new HashSet<>();
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NotNull
     @Size(min = 10, max = 45)
@@ -55,10 +48,6 @@ public class BaseProduct {
     @Column(nullable = false)
     @ColumnDefault(value = "0")
     private Long delayTimeHours;
-
-    @NotNull
-    @ColumnDefault("false")
-    private boolean deleted = false;
 
     @Size(max = 512)
     @Column(length = 512)
