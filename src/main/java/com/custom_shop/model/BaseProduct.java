@@ -10,19 +10,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @Entity(name = "base_products")
 @SQLDelete(sql = "UPDATE base_products SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
@@ -33,8 +40,10 @@ public class BaseProduct extends BaseEntity {
     }
 
     @NotNull
+    @NotBlank
+    @NotEmpty
     @Size(min = 10, max = 45)
-    @Column(unique = true, nullable = false, length = 45)
+    @Column(nullable = false, length = 45) // unique = true,
     private String name;
 
     @Min(0)
@@ -42,9 +51,10 @@ public class BaseProduct extends BaseEntity {
     private BigDecimal basePrice; // For precision
 
     @Size(max = 512)
-    @Column(unique = true, length = 45)
+    @Column(length = 512)
     private String description;
 
+    @PositiveOrZero
     @Column(nullable = false)
     @ColumnDefault(value = "0")
     private Long delayTimeHours;
@@ -53,11 +63,13 @@ public class BaseProduct extends BaseEntity {
     @Column(length = 512)
     private String image;
 
-    @ManyToOne
     @NotNull
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
+    @NotNull
+    @JsonBackReference
     @OneToMany(mappedBy = "baseProduct")
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

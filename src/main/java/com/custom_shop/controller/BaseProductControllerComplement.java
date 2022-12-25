@@ -1,22 +1,31 @@
 package com.custom_shop.controller;
 
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.custom_shop.model.BaseProduct;
 
+import com.custom_shop.DTO.BaseProductDTO;
+import com.custom_shop.DTO.PosibleCustomizationDTO;
+import com.custom_shop.model.BaseProduct;
+import com.custom_shop.model.PosibleCustomization;
 import com.custom_shop.repository.IBaseProduct;
 import com.custom_shop.repository.ICategoryRepo;
-import com.custom_shop.repository.ICustomization;
+import com.custom_shop.repository.IPossibleCustomization;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RepositoryRestController
 @CrossOrigin(origins = { "${settings.cors_origin}" })
 public class BaseProductControllerComplement {
@@ -25,58 +34,34 @@ public class BaseProductControllerComplement {
     IBaseProduct baseProductsRepo;
 
     @Autowired
-    ICustomization customizationRepo;
-
-    @Autowired
     ICategoryRepo categoryRepo;
 
+
     @Transactional
-    @DeleteMapping("baseProducts/{id}")
-    public @ResponseBody ResponseEntity<?> logicDelete(@PathVariable("id") long id) {
-        Optional<BaseProduct> item = baseProductsRepo.findById(id);
-        if (item.isEmpty() || item.get().isDeleted())
-            return ResponseEntity.notFound().build();
+    @PostMapping("baseProducts")
+    public @ResponseBody ResponseEntity<?> addBaseProduct(
+            @RequestBody BaseProductDTO data) {
 
-        item.get().setDeleted(true);
+        boolean productExists = baseProductsRepo.existsByNameIgnoreCaseAndDeletedFalse(data.getName());
 
-        return ResponseEntity.noContent().build();
+        if (productExists) {
+            log.error("Se intento agregar un elemento ya existente : " + data);
+            throw new DataIntegrityViolationException("Se esta intentando dar de alta un elemento duplicado");
+        }
+
+        Set<PosibleCustomization> customizations = new HashSet<>();
+        for (PosibleCustomizationDTO custDTO : data.getCustomizations()) {
+            customizations.add(new PosibleCustomization(custDTO));
+        }
+
+        BaseProduct baseItem = new BaseProduct(
+                data.getName(), data.getBasePrice(), data.getDescription(),
+                data.getDelayTimeHours(), data.getImage(),
+                categoryRepo.findById(data.getCategoryId()).get(),
+                customizations);
+
+        baseProductsRepo.save(baseItem);
+
+        return new ResponseEntity<>(baseItem, HttpStatus.CREATED);
     }
-
-    // @Transactional
-    // @PostMapping("baseProducts/{id}/posibleCustomizations")
-    // public @ResponseBody ResponseEntity<?> addCustomization(@PathVariable("id")
-    // long id,
-    // @RequestBody Customization customization) {
-
-    // Optional<BaseProduct> product = baseProductsRepo.findById(id);
-    // Optional<Customization> cust =
-    // customizationRepo.findById(customization.getId());
-
-    // if (product.isEmpty() || product.get().isDeleted() || cust.isEmpty() ||
-    // cust.get().isDeleted())
-    // return ResponseEntity.notFound().build();
-
-    // product.get().addPosibleCustomization(cust.get());
-
-    // return ResponseEntity.noContent().build();
-    // }
-
-    // @Transactional
-    // @PostMapping("baseProducts/{id}/category")
-    // public @ResponseBody ResponseEntity<?> addCategory(@PathVariable("id") long
-    // prodId,
-    // @RequestBody long categoryId) {
-
-    // Optional<BaseProduct> product = baseProductsRepo.findById(prodId);
-    // Optional<Category> cat = categoryRepo.findById(categoryId);
-
-    // if (product.isEmpty() || product.get().isDeleted() || cat.isEmpty() ||
-    // cat.get().isDeleted())
-    // return ResponseEntity.notFound().build();
-
-    // product.get().setCategory(cat.get());
-
-    // return new ResponseEntity<>(cat.get(), HttpStatus.CREATED);
-    // }
-
 }
