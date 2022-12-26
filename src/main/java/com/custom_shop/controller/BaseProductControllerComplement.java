@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.custom_shop.DTO.BaseProductDTO;
 import com.custom_shop.DTO.PosibleCustomizationDTO;
+import com.custom_shop.mappers.BaseProductDTOToBaseProduct;
 import com.custom_shop.model.BaseProduct;
 import com.custom_shop.model.PosibleCustomization;
 import com.custom_shop.repository.IBaseProduct;
 import com.custom_shop.repository.ICategoryRepo;
-import com.custom_shop.repository.IPossibleCustomization;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,11 +31,10 @@ import lombok.extern.slf4j.Slf4j;
 public class BaseProductControllerComplement {
 
     @Autowired
-    IBaseProduct baseProductsRepo;
+    private IBaseProduct baseProductsRepo;
 
     @Autowired
-    ICategoryRepo categoryRepo;
-
+    private BaseProductDTOToBaseProduct bpMapper;
 
     @Transactional
     @PostMapping("baseProducts")
@@ -49,19 +48,9 @@ public class BaseProductControllerComplement {
             throw new DataIntegrityViolationException("Se esta intentando dar de alta un elemento duplicado");
         }
 
-        Set<PosibleCustomization> customizations = new HashSet<>();
-        for (PosibleCustomizationDTO custDTO : data.getCustomizations()) {
-            customizations.add(new PosibleCustomization(custDTO));
-        }
+        BaseProduct item = bpMapper.map(data);
+        baseProductsRepo.save(item);
 
-        BaseProduct baseItem = new BaseProduct(
-                data.getName(), data.getBasePrice(), data.getDescription(),
-                data.getDelayTimeHours(), data.getImage(),
-                categoryRepo.findById(data.getCategoryId()).get(),
-                customizations);
-
-        baseProductsRepo.save(baseItem);
-
-        return new ResponseEntity<>(baseItem, HttpStatus.CREATED);
+        return new ResponseEntity<>(item, HttpStatus.CREATED);
     }
 }
